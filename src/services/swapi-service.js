@@ -10,30 +10,72 @@ export default class SwapiService {
     return await response.json();
   }
 
-  async getAllPeople() {
-    const res = await this._getResource(`people/`);
-    return res.results;
+  _extractId(url) {
+    const idRegEx = /\/([0-9]*)\/$/;
+    return url.match(idRegEx)[1];
   }
 
-  getPerson(id) {
-    return this._getResource(`people/${id}`);
+  async getAllPeople() {
+    const res = await this._getResource(`people/`);
+    return res.results.map(this._transformPerson);
+  }
+
+  async getPerson(id) {
+    const person = await this._getResource(`people/${id}`);
+    return this._transformPerson(person);
+  }
+
+  _transformPerson({name, gender, birthYear, eyeColor, url}) {
+    return {
+      id: this._extractId(url),
+      name,
+      gender,
+      birthYear,
+      eyeColor,
+    }
   }
 
   async getAllPlanets() {
     const res = await this._getResource(`planets/`);
-    return res.results;
+    return res.results.map(this._transformPlanet);
   }
 
-  getPlanet(id) {
-    return this._getResource(`planets/${id}`);
+  async getPlanet(id) {
+    const planet = await this._getResource(`planets/${id}`);
+    return this._transformPlanet(planet);
+  }
+
+  _transformPlanet({name, population, diameter, rotation_period: rotationPeriod, url}) {
+    return {
+      id: this._extractId(url),
+      name,
+      population,
+      diameter,
+      rotationPeriod,
+    }
   }
 
   async getAllStarships() {
     const res = await this._getResource(`starships/`);
-    return res.results;
+    return res.results.map(this._transformStarship);
   }
 
-  getStarship(id) {
-    return this._getResource(`starships/${id}`);
+  async getStarship(id) {
+    const starship = await this._getResource(`starships/${id}`);
+    return this._transformStarship(starship);
+  }
+
+  _transformStarship({name, model, manufacturer, costInCredits, length, crew, passengers, cargoCapacity, url}) {
+    return {
+      id: this._extractId(url),
+      name,
+      model,
+      manufacturer,
+      costInCredits,
+      length,
+      crew,
+      passengers,
+      cargoCapacity,
+    }
   }
 }
