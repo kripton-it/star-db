@@ -1,18 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
-import './item-list.css';
-import Spinner from '../spinner';
+import "./item-list.css";
+import Spinner from "../spinner";
 
 class ItemList extends Component {
   state = {
-    list: null,
+    list: null
   };
 
   componentDidMount() {
-
     const { getData } = this.props;
 
-    getData().then(list => this.setState({ list })).catch(console.error);
+    getData()
+      .then(list => this.setState({ list }))
+      .catch(console.error);
   }
 
   onPersonClick(id) {
@@ -20,15 +21,22 @@ class ItemList extends Component {
   }
 
   _renderItems(arr) {
-    return arr.map(({name, id}) => (
-      <li
-        className="list-group-item"
-        key={id}
-        onClick={() => this.onPersonClick(id)}
-      >
-        {name}
-      </li>
-    ));
+    const { renderItem } = this.props;
+
+    return arr.map(item => {
+      const { id } = item;
+      const content = renderItem(item);
+
+      return (
+        <li
+          className="list-group-item"
+          key={id}
+          onClick={() => this.onPersonClick(id)}
+        >
+          {content}
+        </li>
+      );
+    });
   }
 
   render() {
@@ -40,11 +48,7 @@ class ItemList extends Component {
 
     const items = this._renderItems(list);
 
-    return (
-      <ul className="item-list list-group">
-        {items}
-      </ul>
-    );
+    return <ul className="item-list list-group">{items}</ul>;
   }
 }
 
