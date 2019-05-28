@@ -5,14 +5,18 @@ import RandomPlanet from '../random-planet';
 import ErrorIndicator from '../error-indicator';
 import ErrorButton from './../error-button/index';
 import PeoplePage from '../people-page';
+import PlanetPage from '../planet-page';
 
 import './app.css';
+import SwapiService from "./../../services/swapi-service";
 
 class App extends Component {
   state = {
     showRandomPlanet: true,
     hasError: false,
   }
+
+  _swapi = new SwapiService();
 
   toggleRandomPlanet = () => {
     this.setState(({showRandomPlanet}) => {
@@ -52,6 +56,8 @@ class App extends Component {
         </div>
   
         <PeoplePage />
+
+        {/* <PlanetPage /> */}
       </div>
     );
   }

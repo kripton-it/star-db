@@ -1,20 +1,18 @@
 import React, { Component } from 'react';
 
 import './item-list.css';
-import SwapiService from './../../services/swapi-service';
 import Spinner from '../spinner';
 
 class ItemList extends Component {
-  _swapi = new SwapiService();
-
   state = {
-    peopleList: null,
+    list: null,
   };
 
   componentDidMount() {
-    this._swapi.getAllPeople().then(peopleList => this.setState({
-      peopleList,
-    })).catch(console.error); // необходимо обработать ошибку
+
+    const { getData } = this.props;
+
+    getData().then(list => this.setState({ list })).catch(console.error);
   }
 
   onPersonClick(id) {
@@ -34,13 +32,13 @@ class ItemList extends Component {
   }
 
   render() {
-    const { peopleList } = this.state;
+    const { list } = this.state;
 
-    if (!peopleList) {
+    if (!list) {
       return <Spinner />;
     }
 
-    const items = this._renderItems(peopleList);
+    const items = this._renderItems(list);
 
     return (
       <ul className="item-list list-group">

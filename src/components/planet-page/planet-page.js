@@ -4,14 +4,14 @@ import ItemList from "../item-list";
 import PersonDetails from "../person-details";
 import ErrorIndicator from "../error-indicator";
 
-import "./people-page.css";
+import "./planet-page.css";
 import SwapiService from "./../../services/swapi-service";
 
 class PeoplePage extends Component {
   _swapi = new SwapiService();
-
+  
   state = {
-    selectedPersonId: 3,
+    selectedItemId: 3,
     hasError: false,
   };
 
@@ -21,14 +21,14 @@ class PeoplePage extends Component {
     });
   }
 
-  onPersonClick = id => {
+  onItemClick = id => {
     this.setState({
-      selectedPersonId: id
+      selectedItemId: id
     });
   };
 
   render() {
-    const { selectedPersonId, hasError } = this.state;
+    const { selectedItemId, hasError } = this.state;
 
     if (hasError) {
       return <ErrorIndicator />;
@@ -37,10 +37,10 @@ class PeoplePage extends Component {
     return (
       <div className="row mb2">
         <div className="col-md-6">
-          <ItemList onPersonClick={this.onPersonClick} getData={this._swapi.getAllPeople}/>
+          <ItemList onItemClick={this.onItemClick} getData={this._swapi.getAllPlanets}/>
         </div>
         <div className="col-md-6">
-          <PersonDetails selectedPersonId={selectedPersonId} />
+          <PersonDetails selectedItemId={selectedItemId} />
         </div>
       </div>
     );
