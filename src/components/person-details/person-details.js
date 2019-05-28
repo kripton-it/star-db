@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import "./person-details.css";
 import SwapiService from "./../../services/swapi-service";
 import Spinner from "../spinner";
+import ErrorButton from "../error-button";
 
 class PersonDetails extends Component {
   _swapi = new SwapiService();
@@ -89,6 +90,7 @@ const Content = props => {
             <span>{eyeColor}</span>
           </li>
         </ul>
+        <ErrorButton />
       </div>
     </>
   );
