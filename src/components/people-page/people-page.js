@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import ItemList from "../item-list";
-import PersonDetails from "../person-details";
+import ItemDetails from "../item-details";
 import ErrorBoundary from "../error-boundary";
 import Row from "../row";
 
@@ -12,7 +12,7 @@ class PeoplePage extends Component {
   _swapi = new SwapiService();
 
   state = {
-    selectedPersonId: 3,
+    selectedPersonId: 3
   };
 
   onPersonClick = id => {
@@ -25,31 +25,32 @@ class PeoplePage extends Component {
     const { selectedPersonId } = this.state;
 
     const itemList = (
-      <ItemList
-        onPersonClick={this.onPersonClick}
-        getData={this._swapi.getAllPeople}
-      >
-        {item => {
-          return (
-            <span>
-              <button>!</button>
-              {item.name}
-            </span>
-          );
-        }}
-      </ItemList>
+      <ErrorBoundary>
+        <ItemList
+          onPersonClick={this.onPersonClick}
+          getData={this._swapi.getAllPeople}
+        >
+          {item => {
+            return (
+              <span>
+                <button>!</button>
+                {item.name}
+              </span>
+            );
+          }}
+        </ItemList>
+      </ErrorBoundary>
     );
 
-    const details = (
+    const itemDetails = (
       <ErrorBoundary>
-        <PersonDetails selectedPersonId={selectedPersonId} />
+        <ItemDetails selectedPersonId={selectedPersonId} />
       </ErrorBoundary>
     );
 
     return (
       <ErrorBoundary>
-        <Row left={itemList} right={details} />
-        <Row left={"itemList"} right={"details"} />
+        <Row left={itemList} right={itemDetails} />
       </ErrorBoundary>
     );
   }

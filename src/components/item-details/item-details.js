@@ -1,32 +1,31 @@
 import React, { Component } from "react";
 
-import "./person-details.css";
-import SwapiService from "./../../services/swapi-service";
+import "./item-details.css";
 import Spinner from "../spinner";
 import ErrorButton from "../error-button";
 
-class PersonDetails extends Component {
-  _swapi = new SwapiService();
+class ItemDetails extends Component {
 
   state = {
-    person: null,
+    item: null,
+    image: null,
     isLoading: false
   };
 
   componentDidMount() {
-    this._updatePerson();
+    this._updateItem();
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.selectedPersonId !== prevProps.selectedPersonId) {
+    if (this.props.itemId !== prevProps.itemId) {
       this._updatePerson();
     }
   }
 
-  _updatePerson() {
-    const { selectedPersonId } = this.props;
+  _updateItem() {
+    const { itemId, getData, getImage } = this.props;
 
-    if (!selectedPersonId) {
+    if (!itemId) {
       return;
     }
 
@@ -34,27 +33,28 @@ class PersonDetails extends Component {
       isLoading: true
     });
 
-    this._swapi.getPerson(selectedPersonId).then(person =>
+    getData(itemId).then(item =>
       this.setState({
-        person,
+        item,
+        image: getImage(item),
         isLoading: false
       })
     );
   }
 
   render() {
-    const { person, isLoading } = this.state;
+    const { item, isLoading, image } = this.state;
 
-    if (!person) {
-      return <span>Select a person from a list</span>;
+    if (!item) {
+      return <span>Select an item from a list</span>;
     }
 
     const spinner = isLoading ? <Spinner /> : null;
 
-    const content = isLoading ? null : <Content person={person} />
+    const content = isLoading ? null : <Content item={item} image={image}/>
 
     return (
-      <div className="card person-details">
+      <div className="card item-details">
         {spinner}
         {content}
       </div>
@@ -62,16 +62,17 @@ class PersonDetails extends Component {
   }
 }
 
-export default PersonDetails;
+export default ItemDetails;
 
 const Content = props => {
-  const { id, name, gender, birthYear, eyeColor } = props.person;
+  const { name, gender, birthYear, eyeColor } = props.item;
+  const { image } = props;
 
   return (
     <>
       <img
-        className="person-image"
-        src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`}
+        className="item-image"
+        src={image}
         alt="person"
       />
       <div className="card-body">

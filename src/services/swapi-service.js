@@ -15,6 +15,8 @@ export default class SwapiService {
     return url.match(idRegEx)[1];
   }
 
+  _getImage = (id, type) => `https://starwars-visualguide.com/assets/img/${type}/${id}.jpg`;
+
   getAllPeople = async () => {
     const res = await this._getResource(`people/`);
     return res.results.map(this._transformPerson);
@@ -23,6 +25,10 @@ export default class SwapiService {
   getPerson = async (id) => {
     const person = await this._getResource(`people/${id}`);
     return this._transformPerson(person);
+  }
+
+  getPersonImage = ({id}) => {
+    return this._getImage(id, 'characters');
   }
 
   _transformPerson = ({
@@ -51,6 +57,10 @@ export default class SwapiService {
     return this._transformPlanet(planet);
   }
 
+  getPlanetImage = ({id}) => {
+    return this._getImage(id, 'planets');
+  }
+
   _transformPlanet = ({
     name,
     population,
@@ -75,6 +85,10 @@ export default class SwapiService {
   getStarship = async (id) => {
     const starship = await this._getResource(`starships/${id}`);
     return this._transformStarship(starship);
+  }
+
+  getStarshipImage = ({id}) => {
+    return this._getImage(id, 'starships');
   }
 
   _transformStarship = ({
