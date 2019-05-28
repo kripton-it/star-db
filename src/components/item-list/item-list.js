@@ -16,8 +16,8 @@ class ItemList extends Component {
       .catch(console.error);
   }
 
-  onPersonClick(id) {
-    this.props.onPersonClick(id);
+  onItemClick(id) {
+    this.props.onItemClick(id);
   }
 
   _renderItems(arr) {
@@ -31,7 +31,7 @@ class ItemList extends Component {
         <li
           className="list-group-item"
           key={id}
-          onClick={() => this.onPersonClick(id)}
+          onClick={() => this.onItemClick(id)}
         >
           {content}
         </li>
@@ -53,3 +53,14 @@ class ItemList extends Component {
 }
 
 export default ItemList;
+/*
+const f = () => {
+  return class extends Component {
+    render() {
+      return <p>Hi</p>;
+    }
+  };
+}
+
+export default f();*/
+

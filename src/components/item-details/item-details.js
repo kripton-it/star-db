@@ -17,12 +17,14 @@ class ItemDetails extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.itemId !== prevProps.itemId) {
-      this._updatePerson();
+      this._updateItem();
     }
   }
 
   _updateItem() {
-    const { itemId, getData, getImage } = this.props;
+    const { itemId, getItem, getImage } = this.props;
+
+    console.log(getImage);
 
     if (!itemId) {
       return;
@@ -32,7 +34,7 @@ class ItemDetails extends Component {
       isLoading: true
     });
 
-    getData(itemId).then(item =>
+    getItem(itemId).then(item =>
       this.setState({
         item,
         image: getImage(item),
@@ -44,7 +46,6 @@ class ItemDetails extends Component {
   render() {
     const { item, isLoading, image } = this.state;
     const { children } = this.props;
-    //console.log(children);
 
     if (!item) {
       return <span>Select an item from a list</span>;
@@ -77,7 +78,7 @@ const Content = props => {
 
   return (
     <>
-      <img className="item-image" src={image} alt="person" />
+      <img className="item-image" src={image} />
       <div className="card-body">
         <h4>{name}</h4>
         <ul className="list-group list-group-flush">
@@ -86,7 +87,7 @@ const Content = props => {
             return child;
           })}
         </ul>
-        <ErrorButton />
+        {/* <ErrorButton /> */}
       </div>
     </>
   );
