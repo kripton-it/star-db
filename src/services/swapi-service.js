@@ -28,8 +28,8 @@ export default class SwapiService {
   _transformPerson = ({
     name,
     gender,
-    birthYear,
-    eyeColor,
+    birth_year: birthYear,
+    eye_color: eyeColor,
     url,
   }) => {
     return {

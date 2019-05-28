@@ -10,7 +10,7 @@ import './app.css';
 class App extends Component {
   state = {
     showRandomPlanet: true,
-    selectedPersonId: null,
+    selectedPersonId: 5,
   }
 
   toggleRandomPlanet = () => {
