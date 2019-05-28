@@ -14,10 +14,10 @@ class RandomPlanet extends Component {
     isLoading: true,
     error: false,
   };
-
-  constructor() {
-    super();
+  
+  componentDidMount() {
     this.updatePlanet();
+    this.interval = setInterval(this.updatePlanet, 5000);
   }
 
   _onPlanetLoaded = (planet) => {
@@ -35,7 +35,7 @@ class RandomPlanet extends Component {
     });
   }
 
-  updatePlanet() {
+  updatePlanet = () => {
     const id = Math.floor(Math.random() * 25) + 1;
     this._swapi.getPlanet(id).then(this._onPlanetLoaded).catch(this._onPlanetError);
   }
