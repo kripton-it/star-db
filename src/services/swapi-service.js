@@ -95,7 +95,7 @@ export default class SwapiService {
     name,
     model,
     manufacturer,
-    costInCredits,
+    cost_in_credits: costInCredits,
     length,
     crew,
     passengers,

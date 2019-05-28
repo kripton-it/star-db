@@ -3,13 +3,14 @@ import React, { Component } from "react";
 import Header from "../header";
 import RandomPlanet from "../random-planet";
 import ErrorIndicator from "../error-indicator";
-import ErrorButton from "./../error-button/index";
-import PeoplePage from "../people-page";
+//import ErrorButton from "./../error-button";
+//import PeoplePage from "../people-page";
 
 import "./app.css";
 import SwapiService from "./../../services/swapi-service";
 import Row from "../row";
-import ItemDetails from "./../item-details/index";
+import ItemDetails from "./../item-details";
+import Record from "./../record";
 import ErrorBoundary from "../error-boundary";
 
 class App extends Component {
@@ -41,24 +42,28 @@ class App extends Component {
       return <ErrorIndicator />;
     }
 
-    const randomPlanet = showRandomPlanet ? <RandomPlanet /> : null;
+    // const randomPlanet = showRandomPlanet ? <RandomPlanet /> : null;
 
-    const { getPerson, getStarship, getPersonImage, getStarshipImage } = this._swapi;
+    const {
+      getPerson,
+      getStarship,
+      getPersonImage,
+      getStarshipImage
+    } = this._swapi;
 
     const personDetails = (
-      <ItemDetails
-        itemId={11}
-        getData={getPerson}
-        getImage={getPersonImage}
-      />
+      <ItemDetails itemId={11} getData={getPerson} getImage={getPersonImage}>
+        <Record field="gender" label="Gender" />
+        <Record field="birthYear" label="Birth Year" />
+      </ItemDetails>
     );
 
     const starshipDetails = (
-      <ItemDetails
-        itemId={5}
-        getData={getStarship}
-        getImage={getStarshipImage}
-      />
+      <ItemDetails itemId={9} getData={getStarship} getImage={getStarshipImage}>
+        <Record field="length" label="Length" />
+        <Record field="model" label="Model" />
+        <Record field="costInCredits" label="Cost" />
+      </ItemDetails>
     );
 
     return (

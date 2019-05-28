@@ -1,11 +1,10 @@
-import React, { Component } from "react";
+import React, { Component, Children, cloneElement } from "react";
 
 import "./item-details.css";
 import Spinner from "../spinner";
 import ErrorButton from "../error-button";
 
 class ItemDetails extends Component {
-
   state = {
     item: null,
     image: null,
@@ -44,6 +43,8 @@ class ItemDetails extends Component {
 
   render() {
     const { item, isLoading, image } = this.state;
+    const { children } = this.props;
+    //console.log(children);
 
     if (!item) {
       return <span>Select an item from a list</span>;
@@ -51,7 +52,13 @@ class ItemDetails extends Component {
 
     const spinner = isLoading ? <Spinner /> : null;
 
-    const content = isLoading ? null : <Content item={item} image={image}/>
+    const content = isLoading ? null : (
+      <Content item={item} image={image}>
+        {Children.map(children, child => {
+          return cloneElement(child, { item });
+        })}
+      </Content>
+    );
 
     return (
       <div className="card item-details">
@@ -65,31 +72,19 @@ class ItemDetails extends Component {
 export default ItemDetails;
 
 const Content = props => {
-  const { name, gender, birthYear, eyeColor } = props.item;
-  const { image } = props;
+  const { item, image, children } = props;
+  const { name } = item;
 
   return (
     <>
-      <img
-        className="item-image"
-        src={image}
-        alt="person"
-      />
+      <img className="item-image" src={image} alt="person" />
       <div className="card-body">
         <h4>{name}</h4>
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            <span className="term">Gender</span>
-            <span>{gender}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Birth Year</span>
-            <span>{birthYear}</span>
-          </li>
-          <li className="list-group-item">
-            <span className="term">Eye Color</span>
-            <span>{eyeColor}</span>
-          </li>
+          {Children.map(children, child => {
+            // console.log(child);
+            return child;
+          })}
         </ul>
         <ErrorButton />
       </div>
