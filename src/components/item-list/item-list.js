@@ -21,11 +21,11 @@ class ItemList extends Component {
   }
 
   _renderItems(arr) {
-    const { renderItem } = this.props;
+    const { children } = this.props;
 
     return arr.map(item => {
       const { id } = item;
-      const content = renderItem(item);
+      const content = children(item);
 
       return (
         <li

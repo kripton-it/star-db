@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 import ItemList from "../item-list";
 import PersonDetails from "../person-details";
-import ErrorIndicator from "../error-indicator";
+import ErrorBoundary from "../error-boundary";
 import Row from "../row";
 
 import "./people-page.css";
@@ -13,14 +13,7 @@ class PeoplePage extends Component {
 
   state = {
     selectedPersonId: 3,
-    hasError: false
   };
-
-  componentDidCatch(error, info) {
-    this.setState({
-      hasError: true
-    });
-  }
 
   onPersonClick = id => {
     this.setState({
@@ -28,37 +21,36 @@ class PeoplePage extends Component {
     });
   };
 
-  renderItem = ({ name }) => {
-    return (
-      <span>
-        <button>!</button>
-        {name}
-      </span>
-    );
-  };
-
   render() {
-    const { selectedPersonId, hasError } = this.state;
-
-    if (hasError) {
-      return <ErrorIndicator />;
-    }
+    const { selectedPersonId } = this.state;
 
     const itemList = (
       <ItemList
         onPersonClick={this.onPersonClick}
         getData={this._swapi.getAllPeople}
-        renderItem={this.renderItem}
-      />
+      >
+        {item => {
+          return (
+            <span>
+              <button>!</button>
+              {item.name}
+            </span>
+          );
+        }}
+      </ItemList>
     );
 
-    const details = <PersonDetails selectedPersonId={selectedPersonId} />;
+    const details = (
+      <ErrorBoundary>
+        <PersonDetails selectedPersonId={selectedPersonId} />
+      </ErrorBoundary>
+    );
 
     return (
-      <>
+      <ErrorBoundary>
         <Row left={itemList} right={details} />
-        <Row left={'itemList'} right={'details'} />
-      </>
+        <Row left={"itemList"} right={"details"} />
+      </ErrorBoundary>
     );
   }
 }
