@@ -15,6 +15,7 @@ import Record from "./../record";
 import ErrorBoundary from "../error-boundary";
 import { PersonList, PlanetList, StarshipList } from "../sw-components/item-lists";
 import { PersonDetails } from "../sw-components/item-details";
+import { SwapiServiceProvider } from "../swapi-service-context";
 
 class App extends Component {
   _swapi = new SwapiService();
@@ -63,43 +64,45 @@ class App extends Component {
 
     return (
       <ErrorBoundary>
-        <div className="stardb-app">
-          <Header />
-          {randomPlanet}
-
-          <div className="row mb2 button-row">
-            <button
-              className="btn btn-warning btn-lg toggle-planet"
-              type="button"
-              onClick={this.toggleRandomPlanet}
-            >
-              Toggle
-            </button>
-            <ErrorButton />
+        <SwapiServiceProvider value={this._swapi}>
+          <div className="stardb-app">
+            <Header />
+            {randomPlanet}
+  
+            <div className="row mb2 button-row">
+              <button
+                className="btn btn-warning btn-lg toggle-planet"
+                type="button"
+                onClick={this.toggleRandomPlanet}
+              >
+                Toggle
+              </button>
+              <ErrorButton />
+            </div>
+  
+            {personPage}
+  
+            {/* <Page
+              getData={getAllPeople}
+              getImage={getPersonImage}
+              getItem={getPerson}
+              type="person"
+            />
+  
+            <Page
+              getData={getAllStarships}
+              getImage={getStarshipImage}
+              getItem={getStarship}
+              type="starship"
+            /> */}
+  
+            {/* <Row left={personList} right={personDetails} />
+            <Row left={starshipList} right={starshipDetails} /> */}
+  
+            {/*<PlanetPage />
+             <Row left={personDetails} right={starshipDetails} /> */}
           </div>
-
-          {personPage}
-
-          {/* <Page
-            getData={getAllPeople}
-            getImage={getPersonImage}
-            getItem={getPerson}
-            type="person"
-          />
-
-          <Page
-            getData={getAllStarships}
-            getImage={getStarshipImage}
-            getItem={getStarship}
-            type="starship"
-          /> */}
-
-          {/* <Row left={personList} right={personDetails} />
-          <Row left={starshipList} right={starshipDetails} /> */}
-
-          {/*<PlanetPage />
-           <Row left={personDetails} right={starshipDetails} /> */}
-        </div>
+        </SwapiServiceProvider>
       </ErrorBoundary>
     );
   }
