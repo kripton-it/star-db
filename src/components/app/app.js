@@ -13,6 +13,8 @@ import Page from "../page";
 import ItemDetails from "./../item-details";
 import Record from "./../record";
 import ErrorBoundary from "../error-boundary";
+import { PersonList, PlanetList, StarshipList } from "../sw-components/item-lists";
+import { PersonDetails } from "../sw-components/item-details";
 
 class App extends Component {
   _swapi = new SwapiService();
@@ -20,6 +22,7 @@ class App extends Component {
   state = {
     showRandomPlanet: true,
     hasError: false,
+    itemId: 1,
   };
 
   toggleRandomPlanet = () => {
@@ -30,6 +33,12 @@ class App extends Component {
     });
   };
 
+  onItemClick = (id) => {
+    this.setState({
+      itemId: id,
+    });
+  }
+
   componentDidCatch() {
     this.setState({
       hasError: true
@@ -37,7 +46,7 @@ class App extends Component {
   }
 
   render() {
-    const { showRandomPlanet, hasError } = this.state;
+    const { showRandomPlanet, hasError, itemId } = this.state;
 
     if (hasError) {
       return <ErrorIndicator />;
@@ -45,56 +54,26 @@ class App extends Component {
 
     const randomPlanet = showRandomPlanet ? <RandomPlanet /> : null;
 
-    const {
-      getAllPeople,
-      getAllStarships,
-      getPerson,
-      getStarship,
-      getPersonImage,
-      getStarshipImage
-    } = this._swapi;
-
-    /*const personList = (
-      <ItemList
-        onItemClick={this.onItemClick}
-        getData={this._swapi.getAllPeople}
-      >
-        {item => {
-          return (
-            <span>
-              <button>!</button>
-              {item.name}
-            </span>
-          );
-        }}
-      </ItemList>
+    const renderPerson = (person) => (
+      <span>
+        <button>!</button>
+        {person.name}
+      </span>
     );
 
-    const starshipList = (
-      <ItemList
-        onItemClick={this.onItemClick}
-        getData={this._swapi.getAllStarships}
-      >
-        {item => {
-          return <span>{item.name}</span>;
-        }}
-      </ItemList>
+    const renderStarship = (starship) => (
+      <span>
+        <button>!!!</button>
+        {starship.name}
+      </span>
     );
 
-    const personDetails = (
-      <ItemDetails itemId={11} getData={getPerson} getImage={getPersonImage}>
-        <Record field="gender" label="Gender" />
-        <Record field="birthYear" label="Birth Year" />
-      </ItemDetails>
-    );
+    const personList = <PersonList renderItem={renderPerson} onItemClick={this.onItemClick}/>;
+    const persondetails = <PersonDetails itemId={itemId}/>;
 
-    const starshipDetails = (
-      <ItemDetails itemId={9} getData={getStarship} getImage={getStarshipImage}>
-        <Record field="length" label="Length" />
-        <Record field="model" label="Model" />
-        <Record field="costInCredits" label="Cost" />
-      </ItemDetails>
-    );*/
+    const starshipList = <StarshipList renderItem={renderStarship} />;
+
+    const personPage = <Row left={personList} right={persondetails} />
 
     return (
       <ErrorBoundary>
@@ -113,7 +92,9 @@ class App extends Component {
             <ErrorButton />
           </div>
 
-          <Page
+          {personPage}
+
+          {/* <Page
             getData={getAllPeople}
             getImage={getPersonImage}
             getItem={getPerson}
@@ -125,7 +106,7 @@ class App extends Component {
             getImage={getStarshipImage}
             getItem={getStarship}
             type="starship"
-          />
+          /> */}
 
           {/* <Row left={personList} right={personDetails} />
           <Row left={starshipList} right={starshipDetails} /> */}
