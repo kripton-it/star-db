@@ -14,7 +14,7 @@ import ItemDetails from "./../item-details";
 import Record from "./../record";
 import ErrorBoundary from "../error-boundary";
 import { PersonList, PlanetList, StarshipList } from "../sw-components/item-lists";
-import { PersonDetails } from "../sw-components/item-details";
+import { PersonDetails } from "../sw-components";
 import { SwapiServiceProvider } from "../swapi-service-context";
 
 class App extends Component {
