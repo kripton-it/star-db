@@ -99,8 +99,8 @@ class Page extends Component {
         <ItemDetails itemId={itemId} getItem={getItem} getImage={getImage}>
           {types
             .filter(item => item.type === type)
-            .map(item => {
-              return <Record field={item["field"]} label={item["label"]} />;
+            .map((item, index) => {
+              return <Record key={index} field={item["field"]} label={item["label"]} />;
             })}
         </ItemDetails>
       </ErrorBoundary>

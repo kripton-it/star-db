@@ -2,7 +2,6 @@ import React, { Component, Children, cloneElement } from "react";
 
 import "./item-details.css";
 import Spinner from "../spinner";
-import ErrorButton from "../error-button";
 
 class ItemDetails extends Component {
   state = {
@@ -23,8 +22,6 @@ class ItemDetails extends Component {
 
   _updateItem() {
     const { itemId, getItem, getImage } = this.props;
-
-    console.log(getImage);
 
     if (!itemId) {
       return;
