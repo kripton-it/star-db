@@ -54,24 +54,10 @@ class App extends Component {
 
     const randomPlanet = showRandomPlanet ? <RandomPlanet /> : null;
 
-    const renderPerson = (person) => (
-      <span>
-        <button>!</button>
-        {person.name}
-      </span>
-    );
-
-    const renderStarship = (starship) => (
-      <span>
-        <button>!!!</button>
-        {starship.name}
-      </span>
-    );
-
-    const personList = <PersonList renderItem={renderPerson} onItemClick={this.onItemClick}/>;
+    const personList = <PersonList onItemClick={this.onItemClick}/>;
     const persondetails = <PersonDetails itemId={itemId}/>;
 
-    const starshipList = <StarshipList renderItem={renderStarship} />;
+    const starshipList = <StarshipList onItemClick={this.onItemClick}/>;
 
     const personPage = <Row left={personList} right={persondetails} />
 
