@@ -4,17 +4,16 @@ import Header from "../header";
 import RandomPlanet from "../random-planet";
 import ErrorIndicator from "../error-indicator";
 import ErrorButton from "./../error-button";
-import ItemList from "../item-list";
+// import ItemList from "../item-list";
 
 import "./app.css";
 import SwapiService from "./../../services/swapi-service";
 import Row from "../row";
-import Page from "../page";
+/*import Page from "../page";
 import ItemDetails from "./../item-details";
-import Record from "./../record";
+import Record from "./../record";*/
 import ErrorBoundary from "../error-boundary";
-import { PersonList, PlanetList, StarshipList } from "../sw-components/item-lists";
-import { PersonDetails } from "../sw-components";
+import { PersonDetails, PlanetDetails, StarshipDetails, PersonList, PlanetList, StarshipList } from "../sw-components";
 import { SwapiServiceProvider } from "../swapi-service-context";
 
 class App extends Component {
@@ -23,7 +22,7 @@ class App extends Component {
   state = {
     showRandomPlanet: true,
     hasError: false,
-    itemId: 1,
+    itemId: 9,
   };
 
   toggleRandomPlanet = () => {
@@ -59,8 +58,16 @@ class App extends Component {
     const persondetails = <PersonDetails itemId={itemId}/>;
 
     const starshipList = <StarshipList onItemClick={this.onItemClick}/>;
+    const starshipdetails = <StarshipDetails itemId={itemId}/>;
+
+    const planetList = <PlanetList onItemClick={this.onItemClick}/>;
+    const planetdetails = <PlanetDetails itemId={itemId}/>;
 
     const personPage = <Row left={personList} right={persondetails} />
+
+    const planetPage = <Row left={planetList} right={planetdetails} />
+
+    const starshipPage = <Row left={starshipList} right={starshipdetails} />
 
     return (
       <ErrorBoundary>
@@ -81,6 +88,8 @@ class App extends Component {
             </div>
   
             {personPage}
+            {planetPage}
+            {starshipPage}
   
             {/* <Page
               getData={getAllPeople}
