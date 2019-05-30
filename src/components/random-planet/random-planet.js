@@ -10,7 +10,19 @@ class RandomPlanet extends Component {
   static defaultProps = {
     interval: 10000,
   };
-  
+
+  static propTypes = {
+    interval: (props, propName, componentName) => {
+      const value = props[propName];
+
+      if (typeof value === 'number' && !isNaN(value)) {
+        return null;
+      }
+
+      return new TypeError(`${componentName}: ${propName} must be a number`);
+    }
+  }
+
   _swapi = new SwapiService();
 
   state = {

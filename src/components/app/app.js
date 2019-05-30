@@ -36,7 +36,7 @@ class App extends Component {
         <SwapiServiceProvider value={swapiService}>
           <div className="stardb-app">
             <Header onServiceChange={this.onServiceChange} />
-            <RandomPlanet interval={10000} />
+            <RandomPlanet />
             <PeoplePage />
             <PlanetPage />
             <StarshipPage />
