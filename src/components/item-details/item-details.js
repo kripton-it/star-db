@@ -1,13 +1,13 @@
 import React, { Component, Children, cloneElement } from "react";
 
 import "./item-details.css";
-import Spinner from "../spinner";
+// import Spinner from "../spinner";
 
 class ItemDetails extends Component {
   state = {
     item: null,
     image: null,
-    isLoading: false
+    // isLoading: false
   };
 
   componentDidMount() {
@@ -32,15 +32,15 @@ class ItemDetails extends Component {
       return;
     }
 
-    this.setState({
+    /*this.setState({
       isLoading: true
-    });
+    });*/
 
     getItem(itemId).then(item =>
       this.setState({
         item,
         image: getImage(item),
-        isLoading: false
+        // isLoading: false
       })
     );
   }
@@ -53,7 +53,7 @@ class ItemDetails extends Component {
       return <span>Select an item from a list</span>;
     }
 
-    const spinner = isLoading ? <Spinner /> : null;
+    // const spinner = isLoading ? <Spinner /> : null;
 
     const content = isLoading ? null : (
       <Content item={item} image={image}>
@@ -65,7 +65,7 @@ class ItemDetails extends Component {
 
     return (
       <div className="card item-details">
-        {spinner}
+        {/* {spinner} */}
         {content}
       </div>
     );
@@ -80,16 +80,14 @@ const Content = props => {
 
   return (
     <>
-      <img className="item-image" src={image} />
+      <img className="item-image" src={image} alt="item"/>
       <div className="card-body">
         <h4>{name}</h4>
         <ul className="list-group list-group-flush">
           {Children.map(children, child => {
-            // console.log(child);
             return child;
           })}
         </ul>
-        {/* <ErrorButton /> */}
       </div>
     </>
   );

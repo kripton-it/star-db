@@ -18,11 +18,11 @@
   text-decoration: none;
 }
 
-.header h3 a {
+.header h3 {
   color: white;
 }
 
-.header h3 a:hover {
+.header h3:hover {
   color: #00bc8c;
 }
 
