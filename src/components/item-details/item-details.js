@@ -15,10 +15,10 @@ class ItemDetails extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { itemId, getItem, getImage } = this.props;
+    const { itemId, getData, getImage } = this.props;
     if (
       itemId !== prevProps.itemId ||
-      getItem !== prevProps.getItem ||
+      getData !== prevProps.getData ||
       getImage !== prevProps.getImage
     ) {
       this._updateItem();
@@ -26,17 +26,19 @@ class ItemDetails extends Component {
   }
 
   _updateItem() {
-    const { itemId, getItem, getImage } = this.props;
+    const { itemId, getData, getImage } = this.props;
 
     if (!itemId) {
       return;
     }
 
+    console.log(itemId);
+
     /*this.setState({
       isLoading: true
     });*/
 
-    getItem(itemId).then(item =>
+    getData(itemId).then(item =>
       this.setState({
         item,
         image: getImage(item),

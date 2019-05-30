@@ -15,7 +15,7 @@ const PersonDetails = props => {
 
 const mapMethodsToProps = (swapiService) => {
   return {
-    getItem: swapiService.getPerson,
+    getData: swapiService.getPerson,
     getImage: swapiService.getPersonImage,
   };
 }

@@ -8,7 +8,7 @@ const withData = View => {
     state = {
       data: null,
       error: false,
-      isLoading: true,
+      isLoading: true
     };
 
     componentDidUpdate(prevProps) {
@@ -24,12 +24,12 @@ const withData = View => {
     _update() {
       this.setState({
         isLoading: true,
-        error: false,
+        error: false
       });
 
       this.props
         .getData()
-        .then(data => this.setState({ data, isLoading: false }))
+        .then(data => this.setState({ data, isLoading: false, error: false }))
         .catch(() =>
           this.setState({
             error: true,

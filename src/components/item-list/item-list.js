@@ -19,4 +19,8 @@ const ItemList = props => {
   return <ul className="item-list list-group">{items}</ul>;
 };
 
+ItemList.defaultProps = {
+  onItemClick: () => {},
+};
+
 export default ItemList;
