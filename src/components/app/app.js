@@ -8,21 +8,28 @@ import ErrorButton from "./../error-button";
 
 import "./app.css";
 import SwapiService from "./../../services/swapi-service";
+import DummySwapiService from "./../../services/dummy-swapi-service";
 import Row from "../row";
 /*import Page from "../page";
 import ItemDetails from "./../item-details";
 import Record from "./../record";*/
 import ErrorBoundary from "../error-boundary";
-import { PersonDetails, PlanetDetails, StarshipDetails, PersonList, PlanetList, StarshipList } from "../sw-components";
+import {
+  PersonDetails,
+  PlanetDetails,
+  StarshipDetails,
+  PersonList,
+  PlanetList,
+  StarshipList
+} from "../sw-components";
 import { SwapiServiceProvider } from "../swapi-service-context";
 
 class App extends Component {
-  _swapi = new SwapiService();
-
   state = {
     showRandomPlanet: true,
     hasError: false,
     itemId: 9,
+    swapiService: new SwapiService()
   };
 
   toggleRandomPlanet = () => {
@@ -33,11 +40,11 @@ class App extends Component {
     });
   };
 
-  onItemClick = (id) => {
+  onItemClick = id => {
     this.setState({
-      itemId: id,
+      itemId: id
     });
-  }
+  };
 
   componentDidCatch() {
     this.setState({
@@ -45,8 +52,17 @@ class App extends Component {
     });
   }
 
+  onServiceChange = () => {
+    this.setState(({swapiService}) => {
+      const Service = swapiService instanceof SwapiService ? DummySwapiService : SwapiService;
+      return {
+        swapiService: new Service(),
+      }
+    });
+  };
+
   render() {
-    const { showRandomPlanet, hasError, itemId } = this.state;
+    const { showRandomPlanet, hasError, itemId, swapiService } = this.state;
 
     if (hasError) {
       return <ErrorIndicator />;
@@ -54,28 +70,28 @@ class App extends Component {
 
     const randomPlanet = showRandomPlanet ? <RandomPlanet /> : null;
 
-    const personList = <PersonList onItemClick={this.onItemClick}/>;
-    const persondetails = <PersonDetails itemId={itemId}/>;
+    const personList = <PersonList onItemClick={this.onItemClick} />;
+    const persondetails = <PersonDetails itemId={itemId} />;
 
-    const starshipList = <StarshipList onItemClick={this.onItemClick}/>;
-    const starshipdetails = <StarshipDetails itemId={itemId}/>;
+    const starshipList = <StarshipList onItemClick={this.onItemClick} />;
+    const starshipdetails = <StarshipDetails itemId={itemId} />;
 
-    const planetList = <PlanetList onItemClick={this.onItemClick}/>;
-    const planetdetails = <PlanetDetails itemId={itemId}/>;
+    const planetList = <PlanetList onItemClick={this.onItemClick} />;
+    const planetdetails = <PlanetDetails itemId={itemId} />;
 
-    const personPage = <Row left={personList} right={persondetails} />
+    const personPage = <Row left={personList} right={persondetails} />;
 
-    const planetPage = <Row left={planetList} right={planetdetails} />
+    const planetPage = <Row left={planetList} right={planetdetails} />;
 
-    const starshipPage = <Row left={starshipList} right={starshipdetails} />
+    const starshipPage = <Row left={starshipList} right={starshipdetails} />;
 
     return (
       <ErrorBoundary>
-        <SwapiServiceProvider value={this._swapi}>
+        <SwapiServiceProvider value={swapiService}>
           <div className="stardb-app">
-            <Header />
+            <Header onServiceChange={this.onServiceChange} />
             {randomPlanet}
-  
+
             <div className="row mb2 button-row">
               <button
                 className="btn btn-warning btn-lg toggle-planet"
@@ -86,11 +102,11 @@ class App extends Component {
               </button>
               <ErrorButton />
             </div>
-  
+
             {personPage}
             {planetPage}
             {starshipPage}
-  
+
             {/* <Page
               getData={getAllPeople}
               getImage={getPersonImage}
@@ -104,10 +120,10 @@ class App extends Component {
               getItem={getStarship}
               type="starship"
             /> */}
-  
+
             {/* <Row left={personList} right={personDetails} />
             <Row left={starshipList} right={starshipDetails} /> */}
-  
+
             {/*<PlanetPage />
              <Row left={personDetails} right={starshipDetails} /> */}
           </div>
