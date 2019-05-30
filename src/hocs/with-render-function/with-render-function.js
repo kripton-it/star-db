@@ -1,6 +1,6 @@
 import React from 'react';
 
-const withRenderFunction = (Wrapped, fn) => {
+const withRenderFunction = (fn) => (Wrapped) => {
   return props => {
     return <Wrapped {...props} renderItem={fn} />;
   };

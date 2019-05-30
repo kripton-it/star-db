@@ -4,14 +4,12 @@ import withData from "../../hocs/with-data";
 import withSwapiService from "../../hocs/with-swapi-service";
 import withRenderFunction from "../../hocs/with-render-function";
 
-const renderPlanet = planet => (
+const renderItem = item => (
   <span>
     <button>!!</button>
-    {planet.name}
+    {item.name}
   </span>
 );
-
-const PlanetList = withData(withRenderFunction(ItemList, renderPlanet));
 
 const mapMethodsToProps = swapiService => {
   return {
@@ -19,4 +17,8 @@ const mapMethodsToProps = swapiService => {
   };
 };
 
-export default withSwapiService(PlanetList, mapMethodsToProps);
+const PlanetList = withSwapiService(mapMethodsToProps)(
+  withData(withRenderFunction(renderItem)(ItemList))
+);
+
+export default PlanetList;
