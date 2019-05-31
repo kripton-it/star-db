@@ -1,9 +1,22 @@
-import React, { Component } from "react";
+import React from "react";
 
 import Row from "../../row";
 import { PersonDetails, PersonList } from "../../sw-components";
+import { withRouter } from "react-router-dom";
 
-class PeoplePage extends Component {
+
+const PeoplePage = ({ history, match }) => {
+  return (
+    <Row
+      left={<PersonList onItemClick={(itemId)=> history.push(itemId)} />}
+      right={<PersonDetails itemId={match.params.id} />}
+    />
+  );
+};
+
+export default withRouter(PeoplePage);
+
+/* class PeoplePage extends Component {
   state = {
     itemId: null,
   };
@@ -16,16 +29,13 @@ class PeoplePage extends Component {
       });
     }
   };
-
   render() {
     const { itemId } = this.state;
     return (
       <Row
         left={<PersonList onItemClick={this.onItemClick} />}
         right={<PersonDetails itemId={itemId} />}
-      />
+     />
     );
   }
-}
-
-export default PeoplePage;
+}*/
