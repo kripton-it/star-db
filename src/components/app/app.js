@@ -9,6 +9,8 @@ import RandomPlanet from "../random-planet";
 import PeoplePage from "../pages/people-page";
 import PlanetPage from "../pages/planet-page";
 import StarshipPage from "../pages/starship-page";
+import SecretPage from "../pages/secret-page";
+import LoginPage from "../pages/login-page";
 
 import SwapiService from "./../../services/swapi-service";
 import DummySwapiService from "./../../services/dummy-swapi-service";
@@ -17,7 +19,8 @@ import { StarshipDetails } from "../sw-components";
 
 class App extends Component {
   state = {
-    swapiService: new SwapiService()
+    swapiService: new SwapiService(),
+    isLoggedIn: false,
   };
 
   onServiceChange = () => {
@@ -30,8 +33,14 @@ class App extends Component {
     });
   };
 
+  onLogin = () => {
+    this.setState({
+      isLoggedIn: true,
+    });
+  }
+
   render() {
-    const { swapiService } = this.state;
+    const { swapiService, isLoggedIn } = this.state;
 
     return (
       <ErrorBoundary>
@@ -46,8 +55,21 @@ class App extends Component {
               <Route path="/starships" component={StarshipPage} exact />
               <Route
                 path="/starships/:id"
-                render={({ match, location, history }) => (
+                render={({ match }) => (
                   <StarshipDetails itemId={match.params.id} />
+                )}
+              />
+              <Route
+                path="/secret"
+                render={() => <SecretPage isLoggedIn={isLoggedIn} />}
+              />
+              <Route
+                path="/login"
+                render={() => (
+                  <LoginPage
+                    isLoggedIn={isLoggedIn}
+                    onLogin={this.onLogin}
+                  />
                 )}
               />
             </div>
