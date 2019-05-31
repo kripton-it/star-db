@@ -31,7 +31,7 @@ import { withRouter } from "react-router-dom";
 
 const StarshipPage = ({ history }) => {
   return (
-    <StarshipList onItemClick={(itemId)=> history.push(`/starships/${itemId}`)} />
+    <StarshipList onItemClick={(itemId)=> history.push(itemId)} />
   );
 }
 
