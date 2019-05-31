@@ -15,7 +15,7 @@ const PlanetDetails = props => {
 
 const mapMethodsToProps = swapiService => {
   return {
-    getItem: swapiService.getPlanet,
+    getData: swapiService.getPlanet,
     getImage: swapiService.getPlanetImage
   };
 };
