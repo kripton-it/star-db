@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
-import Row from "../../row";
-import { StarshipDetails, StarshipList } from "../../sw-components";
+import { StarshipList } from "../../sw-components";
+import { withRouter } from "react-router-dom";
 
-class StarshipPage extends Component {
+/* class StarshipPage extends Component {
   state = {
     itemId: null,
   };
@@ -27,5 +27,12 @@ class StarshipPage extends Component {
     );
   }
 }
+*/
 
-export default StarshipPage;
+const StarshipPage = ({ history }) => {
+  return (
+    <StarshipList onItemClick={(itemId)=> history.push(`/starships/${itemId}`)} />
+  );
+}
+
+export default withRouter(StarshipPage);
